@@ -69,6 +69,7 @@ let stringArray = [String]()
 
 
 
+
 /*:
  - Callout(Stretch Goal):
  Optional chaining is a process we can use to call properties, methods and subscripts on optionals whose value may or may not be nil. This acts like an alternative way to do force unwrapping but if the optional value is nil, it won't crash the app during runtime.
@@ -99,6 +100,10 @@ let dictionary: Dictionary? = ["Sentence 1" : "Let me help you with your baggage
                                "Sentence 2" : "I'd rather have a burger",
                                "Sentence 3" : "I think I will buy the red car"]
 
-
+if let dictionary = dictionary{
+  for dict in dictionary{
+    print(dict.value.count)
+  }
+}
 
 //: [Next](@next)

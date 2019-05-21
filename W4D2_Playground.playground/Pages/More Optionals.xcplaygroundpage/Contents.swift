@@ -7,32 +7,41 @@
  - Experiment:
  Declare a optional Double value and set it to nil.
  */
+var double : Double? = nil
 
 
 /*:
  - Experiment:
  Assign a value your optional Double.
  */
-
+double = 0
 
 /*:
  - Experiment:
  Force unwrap the optional value. Why do you have to be careful about force unwrapping?
  */
-
+print(double!)
 
 /*:
  - Experiment:
  Use conditional unwrapping to verify if the optional has a value. Print the value if there is something, otherwise, print out to indicate there is no value present. Why is conditional unwrapping better than force unwrapping?
  */
-
+if let double = double{
+  print(double)
+}
 
 /*:
  - Callout(Challenge):
  Create a function that removes the `nil` values from the array and returns a new array with only the valid Strings.
  */
 var testData: [String?] = ["Heather", nil, "Mike", "John", nil, nil, "Bob"]
-
+var newArray = [String]()
+for value in testData{
+  if value != nil{
+    newArray.append(value!)
+  }
+}
+print(newArray)
 
 /*:
  - Callout(Challenge):
@@ -54,6 +63,45 @@ let email: String? = "user1@lighthouselabs.ca"
 //let username: String? = nil
 //let password: String? = nil
 //let email: String? = "user1@lighthouselabs.ca"
+
+//func validateForm(username:String?, password:String?, email:String?) -> String{
+//  var finalString = ""
+//  if username != nil {
+//    finalString.append(username!)
+//  }else{
+//    print("username empty")
+//  }
+//
+//  if password != nil {
+//    finalString.append(password!)
+//  }else{
+//    print("password empty")
+//  }
+//
+//  if email != nil {
+//    finalString.append(email!)
+//  }else{
+//    print("email empty")
+//  }
+//
+//
+//
+// return finalString
+//}
+
+func validateForm(username:String?, password:String?, email:String?) -> String{
+  guard let username = username else{
+    return "enter valid username"
+  }
+  guard let passwordValue = password else {
+    return "enter valid password"
+  }
+  guard let emailValue = email else{
+    return "enter valid email"
+  }
+  
+  return "\(username), \(passwordValue), \(emailValue)"
+}
 
 
 
@@ -91,6 +139,12 @@ isMyNumberANegativeValue(myNumber: myNumber)
  - Experiment:
  Create a function that takes in two number parameters and divide them. We don't like dividing by zero, so ensure this doesn't happen. Otherwise, return the calculated value.
  */
+func divide(num1:Int, num2:Int) -> Int{
+  guard num2 > 0 else{
+    return 0
+  }
+  return num1 / num2
+}
 
 
 /*:
@@ -123,7 +177,18 @@ isMyNumberAnOptional(myOptionalNumber: myOptionalNumber)
  - Experiment:
  Create a function that takes in an array of numbers. Have the function add all the numbers together and return the result. Make sure to `guard` against an empty array. Use `array.first` to check if there is at least one value in the array.
  */
+func addArrayNum(numbers:[Int]) -> Int{
+  var total = 0
+  guard numbers.first != nil else {
+    return 0
+  }
+  for i in 0..<numbers.count {
+    total += numbers[i]
+  }
+  return total
+}
 
+addArrayNum(numbers: [1,2,3,4,5])
 
 /*:
  - Callout(Challenge):

@@ -53,24 +53,51 @@ catch let error {
  - Experiment:
  Create a Human class that has a name and age property. Also, create an initializer for this class to set its initial properties.
  */
+class Human{
+  var name : String
+  var age: Int
+  
+  init(name:String,age:Int) throws{
+    if name.isEmpty{
+      throw ErrorToThrow.nameIsEmpty
+    } else if age < 18{
+      throw ErrorToThrow.ageIsInvalid
+    }
+    
+    self.name = name
+    self.age = age
+  }
+}
 
 
 /*:
  - Experiment:
  Create your own errors that throw when the name provided is empty or if the age is invalid. Go back and update the Human's initializer to throw an error when the data passed in is invalid.
  */
-
+enum ErrorToThrow:Error{
+  case nameIsEmpty
+  case ageIsInvalid
+}
 
 /*:
  - Experiment:
  Now you can test your new Human class and surround it around the do-catch blocks.
  */
+do{
+  let newHuman = try Human(name: "lalal", age: 12)
+  print(newHuman.name)
+}catch let error{
+  print(error)
+}
 
 
 /*:
  - Experiment:
  Test your Human class again but don't surround it with a do-catch block and use `try?` instead. What do you notice? (What is the value of the new human when an error is thrown?)
  */
+let anotherHuman = try? Human(name: "hlelo", age: 13)
+
+//nil
 
 
 /*:
@@ -80,6 +107,17 @@ catch let error {
  `class func jsonObject(with data: Data, options opt: JSONSerialization.ReadingOptions = []) throws -> Any`
  */
 let data = "{\"firstName\": \"Bob\", \"lastName\": \"Doe\", \"vehicles\": [\"car\", \"motorcycle\", \"train\"]}".data(using: .utf8)!
+
+do{
+  if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any]{
+    for dict in json{
+      print(dict.key)
+      print(dict.value)
+    }
+  }
+}catch let error{
+  print(error)
+}
 
 
 /*:
@@ -101,6 +139,35 @@ let email: String? = "user1@lighthouselabs.ca"
 //let password: String? = nil
 //let email: String? = "user1@lighthouselabs.ca"
 
+enum validateEror:Error{
+  case invalidName
+  case invalidPassword
+  case invalidEmail
+}
+
+func valididateForm(username:String?, password:String?, email:String?) throws -> String{
+  guard let username = username else{
+    throw validateEror.invalidName
+    return "invalid name"
+  }
+  guard let password = password else{
+    throw validateEror.invalidPassword
+     return "invalid password"
+  }
+  guard let email = email else{
+    throw validateEror.invalidEmail
+     return "invalid email"
+  }
+  return "\(username), \(password), \(email)"
+}
+
+do{
+  if let validateResult = try? valididateForm(username: username, password: password, email: email){
+    print(validateResult)
+  }
+}catch let error{
+  print(error)
+}
 
 /*:
  - Callout(Challenge):
@@ -118,6 +185,27 @@ class HondaDealership{
   
   
   
+}
+
+func sellCar(model:String, offeredPrice:Int)throws{
+  if !["Civic","CRV","Prelude"].contains(model){
+    throw carError.modelDoesntExist
+  }
+  if model == "Civic" && offeredPrice < 5000{
+    throw carError.insufficientFund
+  }
+  print("sold car")
+}
+
+do{
+  try sellCar(model: "Civic", offeredPrice: 4999)
+}catch let error{
+  print(error)
+}
+
+enum carError:Error{
+  case modelDoesntExist
+  case insufficientFund
 }
 
 //: [Next](@next)

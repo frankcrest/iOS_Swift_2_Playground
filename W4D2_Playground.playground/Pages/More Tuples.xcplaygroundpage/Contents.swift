@@ -17,6 +17,14 @@ case (5, 6):
   print("We got 11!")
 case (6, 5):
   print("We got 11!")
+case (_, 1):
+  print("second dice is one")
+case (2, _):
+  print("first dice is two")
+case (1...3, 1...3):
+  print("both dice within 1-3")
+case (let x, let y) where x == y:
+  print("both dice same value")
 default:
   print("This roll doesn't matter to us")
 }
@@ -40,7 +48,14 @@ default:
  - Halloween Day - Oct 31
  - Otherwise, indiciate the given day is not a holiday
  */
+let holiday = (12,25)
 
+switch holiday {
+case (12,25):
+  print("Christmas")
+default:
+  print("not a holiday")
+}
 
 /*:
  - Callout(Challenge):
@@ -54,6 +69,21 @@ default:
  - point is inside the blue outlined box
  - point is outside the blue outlined box
  */
+
+let xy = (0,1)
+
+switch xy {
+case (0,_):
+  print("on y axis")
+case (_,0):
+  print("on x axis")
+case (let x, let y)where abs(x) < 3 && abs(y) < 3:
+  print("within box")
+case (let x, let y)where abs(x) >= 3 && abs(y) >= 3:
+  print("outside box")
+default:
+  print("lol")
+}
 
 
 //: [Next](@next)
